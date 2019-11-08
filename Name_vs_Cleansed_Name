@@ -1,0 +1,29 @@
+Businesses with different name vs cleansed name
+
+WITH table1 as(
+SELECT * FROM(
+SELECT
+StoreID,
+displayName,
+Cleansedname,
+CASE WHEN displayName != CleansedName THEN "Different name" ELSE "Same name" END as Name_cleanse
+FROM Uberall
+GROUP BY displayName
+ORDER BY  CASE WHEN displayName != CleansedName THEN "Different name" ELSE "Same name" END  ASC)
+),
+table2 as (
+SELECT 
+StoreID,
+state,
+city
+FROM 
+Uberall
+)
+SELECT 
+state,
+count(Name_cleanse)
+FROM table1
+JOIN table2 ON table1.StoreID = table2.StoreID
+WHERE Name_cleanse = "Different name"
+GROUP BY state
+ORDER BY  count(Name_cleanse) DESC
