@@ -1,0 +1,8 @@
+SELECT 
+city,
+state,
+count(displayName) as businesses,
+ROUND(AVG(DaysCvsLC)) as average_days
+FROM Uberall
+GROUP BY city , state
+ORDER BY AVG(DaysCvsLC) DESC
