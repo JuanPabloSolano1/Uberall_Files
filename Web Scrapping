@@ -1,0 +1,14 @@
+  
+from bs4 import BeautifulSoup
+import requests
+page_link = 'http://www.coop.ch/de/services/standorte-und-oeffnungszeiten/detail.html/4561/'
+page_response = requests.get(page_link, timeout=5)
+page_content = BeautifulSoup(page_response.content, "html.parser")
+print(page_content)
+textContent = []
+for i in range(0, 20):
+  paragraphs = page_content.find_all("span")[i].text
+  anchor = page_content.find_all("a")[i].text
+  divs = page_content.find_all("div", {"class": "vst-shop-phone"})
+  print(paragraphs)
+  print(anchor)
